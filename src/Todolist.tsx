@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState, KeyboardEvent } from "react";
 import { FilterValuesType, TasksType } from "./App";
-import SuperButton from "./components/SuperButton";
 
 // export type TaskType = {
 //     id: string
@@ -34,26 +33,18 @@ export function Todolist(props: PropsType) {
       // addTask();
     }
   };
-  const removeTodolistHandler = () => {
-    props.removeTodolist(props.id);
-  };
-  const addTaskHandler = () => {
-    props.addTask(title, props.id);
-  };
 
   return (
     <div>
       <h3>
-        {" "}
         {props.title}
-        {/*<button*/}
-        {/*  onClick={() => {*/}
-        {/*    "removeTodolist";*/}
-        {/*  }}*/}
-        {/*>*/}
-        {/*  x*/}
-        {/*</button>*/}
-        <SuperButton callBack={removeTodolistHandler} name={"x"} />
+        <button
+          onClick={() => {
+            "removeTodolist";
+          }}
+        >
+          x
+        </button>
       </h3>
       <div>
         <input
@@ -69,7 +60,6 @@ export function Todolist(props: PropsType) {
         >
           +
         </button>
-        <SuperButton callBack={addTaskHandler} name={"+"} />
         {error && <div className="error-message">{error}</div>}
       </div>
       <ul>
