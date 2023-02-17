@@ -34,17 +34,15 @@ export function Todolist(props: PropsType) {
     }
   };
 
+  const removeTodoListHandler = () => {
+    props.removeTodolist(props.id);
+  };
+
   return (
     <div>
       <h3>
         {props.title}
-        <button
-          onClick={() => {
-            "removeTodolist";
-          }}
-        >
-          x
-        </button>
+        <button onClick={removeTodoListHandler}>x</button>
       </h3>
       <div>
         <input
