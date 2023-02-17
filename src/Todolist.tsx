@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState, KeyboardEvent } from "react";
 import { FilterValuesType, TasksType } from "./App";
+import { SuperButton } from "./components/SuperButton";
 
 // export type TaskType = {
 //     id: string
@@ -33,18 +34,25 @@ export function Todolist(props: PropsType) {
       // addTask();
     }
   };
+  const removeTodolistHandler = () => {
+    props.removeTodolist(props.id);
+  };
+  const addTaskHandler = () => {
+    props.addTask(title, props.id);
+    setTitle("");
+  };
+  const removeTaskHandler = (taskId: string) => {
+    props.removeTask(taskId, props.id);
+  };
+  const tsarChangeFilter = (valueFilter: FilterValuesType) => {
+    props.changeFilter(valueFilter, props.id);
+  };
 
   return (
     <div>
       <h3>
         {props.title}
-        <button
-          onClick={() => {
-            "removeTodolist";
-          }}
-        >
-          x
-        </button>
+        <SuperButton callBack={removeTodolistHandler} name={"removeTodolist"} />
       </h3>
       <div>
         <input
@@ -53,13 +61,7 @@ export function Todolist(props: PropsType) {
           onKeyPress={onKeyPressHandler}
           className={error ? "error" : ""}
         />
-        <button
-          onClick={() => {
-            "addTask";
-          }}
-        >
-          +
-        </button>
+        <SuperButton callBack={addTaskHandler} name={"+"} />
         {error && <div className="error-message">{error}</div>}
       </div>
       <ul>
@@ -68,7 +70,6 @@ export function Todolist(props: PropsType) {
             let newIsDoneValue = e.currentTarget.checked;
             props.changeTaskStatus(t.taskId, newIsDoneValue, props.id);
           };
-
           return (
             <li key={t.taskId} className={t.isDone ? "is-done" : ""}>
               <input
@@ -77,36 +78,27 @@ export function Todolist(props: PropsType) {
                 checked={t.isDone}
               />
               <span>{t.title}</span>
-              <button
-                onClick={() => {
-                  "removeTask";
-                }}
-              >
-                x
-              </button>
+              <SuperButton
+                callBack={() => removeTaskHandler(t.taskId)}
+                name={"X"}
+              />
             </li>
           );
         })}
       </ul>
       <div>
-        <button
-          className={props.filter === "all" ? "active-filter" : ""}
-          onClick={() => {}}
-        >
-          All
-        </button>
-        <button
-          className={props.filter === "active" ? "active-filter" : ""}
-          onClick={() => {}}
-        >
-          Active
-        </button>
-        <button
-          className={props.filter === "completed" ? "active-filter" : ""}
-          onClick={() => {}}
-        >
-          Completed
-        </button>
+        <SuperButton callBack={() => tsarChangeFilter("all")} name={"all"} />
+        <SuperButton
+          callBack={() => tsarChangeFilter("active")}
+          name={"active"}
+        />
+        <SuperButton
+          callBack={() => tsarChangeFilter("completed")}
+          name={"completed"}
+        />
+        {/*<button className={props.filter === "all" ? "active-filter" : ""} onClick={() => {}}>All</button>*/}
+        {/*<button className={props.filter === "active" ? "active-filter" : ""} onClick={() => {}}>Active</button>*/}
+        {/*<button className={props.filter === "completed" ? "active-filter" : ""} onClick={() => {}}>Completed</button>*/}
       </div>
       <p></p>
       {props.students.map((el) => {
